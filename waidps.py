@@ -48,95 +48,97 @@ from signal import SIGINT, SIGTERM
 from subprocess import Popen, call, PIPE
 from sys import stdout, stdin 
 from math import floor
+
+from color import fcolor
 appver="1.0, R.6"
 apptitle="WAIDPS"
-appDesc="- The Wireless Auditing, Intrusion Detection & Prevention System"
-appcreated="28 Feb 2014"
-appupdated="10 Oct 2014"
-appnote="Written By SY Chua, " + appcreated + ", Updated " + appupdated
+appDesc="- C500 Wireless Auditing, Intrusion Detection & Prevention System"
+appcreated="20 June 2024"
+appupdated="20 June 2024"
+appnote="Written, " + appcreated + ", Updated " + appupdated
 appdescription="Wiresless Auditing, Intrusion Detection & Prevention System is a whole new application which is design to harvest all WiFi information (AP / Station details) in your surrounding and store as a database for reference. With the stored data, user can further lookup for specific MAC or names for detailed information of it relation to other MAC addresses. It primarily purpose is to detect wireless attacks in WEP/WPA/WPS encryption. It also comes with an analyzer and viewer which allow user to further probe and investigation on the intrusion/suspicious packets captured. Additional features such as blacklisting which allow user to monitor specific MACs/Names's activities. All information captured can also be saved into pcap files for further investigation."
-class fcolor:
-    CReset='\033[0m'
-    CBold='\033[1m'
-    CDim='\033[2m'
-    CUnderline='\033[4m'
-    CBlink='\033[5m'
-    CInvert='\033[7m'
-    CHidden='\033[8m'
-    CDebugB='\033[1;90m'
-    CDebug='\033[0;90m'
-    Black='\033[0;30m'
-    Red='\033[0;31m'
-    Green='\033[0;32m'
-    Yellow='\033[0;33m'
-    Blue='\033[0;34m'
-    Pink='\033[0;35m'
-    Cyan='\033[0;36m'
-    White='\033[0;37m'
-    SBlack=CReset + '\033[30m'
-    SRed=CReset + '\033[31m'
-    SGreen=CReset + '\033[32m'
-    SYellow=CReset + '\033[33m'
-    SBlue=CReset + '\033[34m'
-    SPink=CReset + '\033[35m'
-    SCyan=CReset + '\033[36m'
-    SWhite=CReset + '\033[37m'
-    BBlack='\033[1;30m'
-    BRed='\033[1;31m'
-    BBlue='\033[1;34m'
-    BYellow='\033[1;33m'
-    BGreen='\033[1;32m'
-    BPink='\033[1;35m'
-    BCyan='\033[1;36m'
-    BWhite='\033[1;37m'
-    UBlack='\033[4;30m'
-    URed='\033[4;31m'
-    UGreen='\033[4;32m'
-    UYellow='\033[4;33m'
-    UBlue='\033[4;34m'
-    UPink='\033[4;35m'
-    UCyan='\033[4;36m'
-    UWhite='\033[4;37m'
-    BUBlack=CBold + '\033[4;30m'
-    BURed=CBold + '\033[4;31m'
-    BUGreen=CBold + '\033[4;32m'
-    BUYellow=CBold + '\033[4;33m'
-    BUBlue=CBold + '\033[4;34m'
-    BUPink=CBold + '\033[4;35m'
-    BUCyan=CBold + '\033[4;36m'
-    BUWhite=CBold + '\033[4;37m'
-    IGray='\033[0;90m'
-    IRed='\033[0;91m'
-    IGreen='\033[0;92m'
-    IYellow='\033[0;93m'
-    IBlue='\033[0;94m'
-    IPink='\033[0;95m'
-    ICyan='\033[0;96m'
-    IWhite='\033[0;97m'
-    BIGray='\033[1;90m'
-    BIRed='\033[1;91m'
-    BIGreen='\033[1;92m'
-    BIYellow='\033[1;93m'
-    BIBlue='\033[1;94m'
-    BIPink='\033[1;95m'
-    BICyan='\033[1;96m'
-    BIWhite='\033[1;97m'
-    BGBlack='\033[40m'
-    BGRed='\033[41m'
-    BGGreen='\033[42m'
-    BGYellow='\033[43m'
-    BGBlue='\033[44m'
-    BGPink='\033[45m'
-    BGCyan='\033[46m'
-    BGWhite='\033[47m'
-    BGIBlack='\033[100m'
-    BGIRed='\033[101m'
-    BGIGreen='\033[102m'
-    BGIYellow='\033[103m'
-    BGIBlue='\033[104m'
-    BGIPink='\033[105m'
-    BGICyan='\033[106m'
-    BGIWhite='\033[107m'
+# class fcolor:
+#     CReset='\033[0m'
+#     CBold='\033[1m'
+#     CDim='\033[2m'
+#     CUnderline='\033[4m'
+#     CBlink='\033[5m'
+#     CInvert='\033[7m'
+#     CHidden='\033[8m'
+#     CDebugB='\033[1;90m'
+#     CDebug='\033[0;90m'
+#     Black='\033[0;30m'
+#     Red='\033[0;31m'
+#     Green='\033[0;32m'
+#     Yellow='\033[0;33m'
+#     Blue='\033[0;34m'
+#     Pink='\033[0;35m'
+#     Cyan='\033[0;36m'
+#     White='\033[0;37m'
+#     SBlack=CReset + '\033[30m'
+#     SRed=CReset + '\033[31m'
+#     SGreen=CReset + '\033[32m'
+#     SYellow=CReset + '\033[33m'
+#     SBlue=CReset + '\033[34m'
+#     SPink=CReset + '\033[35m'
+#     SCyan=CReset + '\033[36m'
+#     SWhite=CReset + '\033[37m'
+#     BBlack='\033[1;30m'
+#     BRed='\033[1;31m'
+#     BBlue='\033[1;34m'
+#     BYellow='\033[1;33m'
+#     BGreen='\033[1;32m'
+#     BPink='\033[1;35m'
+#     BCyan='\033[1;36m'
+#     BWhite='\033[1;37m'
+#     UBlack='\033[4;30m'
+#     URed='\033[4;31m'
+#     UGreen='\033[4;32m'
+#     UYellow='\033[4;33m'
+#     UBlue='\033[4;34m'
+#     UPink='\033[4;35m'
+#     UCyan='\033[4;36m'
+#     UWhite='\033[4;37m'
+#     BUBlack=CBold + '\033[4;30m'
+#     BURed=CBold + '\033[4;31m'
+#     BUGreen=CBold + '\033[4;32m'
+#     BUYellow=CBold + '\033[4;33m'
+#     BUBlue=CBold + '\033[4;34m'
+#     BUPink=CBold + '\033[4;35m'
+#     BUCyan=CBold + '\033[4;36m'
+#     BUWhite=CBold + '\033[4;37m'
+#     IGray='\033[0;90m'
+#     IRed='\033[0;91m'
+#     IGreen='\033[0;92m'
+#     IYellow='\033[0;93m'
+#     IBlue='\033[0;94m'
+#     IPink='\033[0;95m'
+#     ICyan='\033[0;96m'
+#     IWhite='\033[0;97m'
+#     BIGray='\033[1;90m'
+#     BIRed='\033[1;91m'
+#     BIGreen='\033[1;92m'
+#     BIYellow='\033[1;93m'
+#     BIBlue='\033[1;94m'
+#     BIPink='\033[1;95m'
+#     BICyan='\033[1;96m'
+#     BIWhite='\033[1;97m'
+#     BGBlack='\033[40m'
+#     BGRed='\033[41m'
+#     BGGreen='\033[42m'
+#     BGYellow='\033[43m'
+#     BGBlue='\033[44m'
+#     BGPink='\033[45m'
+#     BGCyan='\033[46m'
+#     BGWhite='\033[47m'
+#     BGIBlack='\033[100m'
+#     BGIRed='\033[101m'
+#     BGIGreen='\033[102m'
+#     BGIYellow='\033[103m'
+#     BGIBlue='\033[104m'
+#     BGIPink='\033[105m'
+#     BGICyan='\033[106m'
+#     BGIWhite='\033[107m'
 
 def RemoveColor(InText):
     return color_pattern.sub('',InText);
@@ -160,239 +162,6 @@ def CheckAdmin():
         printc ("!!!",fcolor.BGreen + apptitle + " required administrator rights in order to run properly !","")
         printc ("!!!",fcolor.SGreen + "Log in as '" + fcolor.BRed + "root" + fcolor.SGreen + "' user or run '" + fcolor.BRed + "sudo ./" + __builtin__.ScriptName + fcolor.SGreen + "'","")
         exit_gracefully(1)
-##--DropFile--##
-##--FileName:Stn.DeAuth.py
-###! /usr/bin/python
-###############################################
-#### This script is use as part of WAIDPS
-#### Written By SY Chua, syworks@gmail.com
-#### Written 15/04/2014 - Updated 25/04/2014
-##import sys,os
-##import time
-##from datetime import datetime
-##import termios,curses
-##from math import floor
-##import logging
-##logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
-##from scapy.all import *
-##from waidps import *
-##import __builtin__
-##from waidps import AskQuestion
-##__builtin__.Multicast=""
-##__builtin__.DEAUTH=0
-##__builtin__.DISASSOC=0
-##__builtin__.ACK=0
-##__builtin__.AUTH=0
-##__builtin__.AUTH_BSSID=[]
-##import subprocess, signal
-##timefmt="%Y-%m-%d %H:%M:%S"
-##__builtin__.DumpProc=""
-##appdir="/.SYWorks/WAIDPS/"
-##tmpdir=appdir + "tmp/"
-##__builtin__.Client_CSV=tmpdir + "Dumps-Client.csv"
-##title=fcolor.BGreen + "Stn.DeAuth - V1.0, Written by SYChua (25/04/2014)"
-##
-##def TerminatingProc(ProcName):
-##    pstr="kill $(ps aux | grep '" + str(ProcName) + "' | awk '{print $2}')"
-##    ps=subprocess.Popen(pstr, shell=True, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'),preexec_fn=os.setsid)
-##
-##def MonitoringPacket():
-##    TerminatingProc(ProcTitle)
-##    cmdLine="xterm -geometry 100x5-0-0 -iconic -bg black -fg white -fn 5x8 -title '" + str(ProcTitle) + "' -e 'tshark -i " + str(conf.iface) + " -a duration:60 -R 'wlan.addr==" + str(client) + "' -o column.format:'SA','%Cus:wlan.sa','DA','%Cus:wlan.da','BSSID','%Cus:wlan.bssid','TA','%Cus:wlan.ta','RA','%Cus:wlan.ra','FCSub','%Cus:wlan.fc.type_subtype' -n -l > " + str(tmpfile) + "'"
-##    ps=subprocess.Popen(cmdLine , shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)	
-##    __builtin__.DumpProc=ps.pid
-##    cttime=0
-##
-##def CheckProcess():
-##    cmdLine="ps -eo pid | grep '" + str(__builtin__.DumpProc) + "'"
-##    ps=subprocess.Popen(cmdLine , shell=True, stdout=subprocess.PIPE)	
-##    readout=str(ps.stdout.read().replace("\n",""))
-##    readout=str(readout).lstrip().rstrip()
-##    __builtin__.DumpProc=str(__builtin__.DumpProc)
-##    if str(readout)!=str(__builtin__.DumpProc):
-##        MonitoringPacket()
-##
-##def Percent(val, digits):
-##    val *= 10 ** (digits + 2)
-##    return '{1:.{0}f} %'.format(digits, floor(val) / 10 ** digits)
-##
-##def GiveClientResult(MACAddr):
-##    if os.path.isfile(__builtin__.Client_CSV)==True:
-##        with open(__builtin__.Client_CSV,"r") as f:
-##            for line in f:
-##                line=line.replace("\n","").replace("\00","").replace("\r","")
-##                if len(line)>=94:
-##                    line=line + ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
-##                    st = list(line)
-##                    st[18]=";";st[39]=";";st[60]=";";st[65]=";";st[75]=";";st[94]=";";lp="".join(st)
-##                    lp=lp.replace(",;","; ")
-##                    LineList=lp.split(";")
-##                    STATION=LineList[0]
-##                    cBSSID=LineList[5]
-##                    if len(STATION)==17 and len(cBSSID)==17:
-##                        if STATION==str(MACAddr) and CheckMAC(cBSSID!=""):
-##                            BSSIDList.append (cBSSID)
-##                        if cBSSID==str(MACAddr) and CheckMAC(STATION!=""):
-##                            BSSIDList.append (STATION)
-##                    if len(STATION)==17 and MACAddr==STATION and str(line).find("(not associated)")!=-1:
-##                        BSSIDList=[]
-##                        print fcolor.SGreen + str(time.strftime(timefmt)) + " - " + fcolor.BBlue + "Detected [ " + fcolor.BRed + str(STATION) + fcolor.BBlue + " ] ==> Not Associated"
-##
-##def ReadCaptured():
-##    if os.path.isfile(tmpfile)==True:
-##        with open(tmpfile,"r") as f:
-##            for line in f:
-##                line=line.replace("\n","").upper().replace("\x00","")
-##                lines=line.split(" ")
-##                x=0
-##                if len(lines)>5 and str(lines[5]).find("PROBE")==-1:
-##                    if str(lines[5]).find("DEAUTHENTICATION")!=-1:
-##                        __builtin__.DEAUTH=__builtin__.DEAUTH+1
-##                    if str(lines[5]).find("DISASSOCIATE")!=-1:
-##                        __builtin__.DISASSOC=__builtin__.DISASSOC+1
-##                    if str(lines[5]).find("ACKNOWLEDGEMENT")!=-1 and str(lines[4]).find(client)!=-1:
-##                        __builtin__.ACK=__builtin__.ACK+1
-##                    if str(lines[5])=="AUTHENTICATION" or str(lines[5])=="ASSOCIATION":
-##                        __builtin__.AUTH=__builtin__.AUTH+1
-##                        if lines[2]!="" and len(lines[2])==17 and str(__builtin__.AUTH_BSSID).find(lines[2])==-1 and CheckMAC(lines[2])!="" and lines[2]!=client:
-##                            __builtin__.AUTH_BSSID.append (str(lines[2]))
-##                    while x<5:
-##                        lines[x]=str(lines[x]).replace("\x00","")
-##                        if len(lines[x])==17 and str(BSSIDList).find(lines[x])==-1 and lines[x]!=client:
-##                            if str(lines[x])[:6]=="33:33:"  or str(lines[x])[:9]=="01:00:5E:":
-##                                __builtin__.Multicast="   [ Multicast Detected ]"
-##                            elif str(lines[x])[:6]=="FF:FF:" and x!=2:
-##                                __builtin__.Multicast="   [ Broadcast Detected ]"
-##                            else:
-##                                if CheckMAC(lines[x])!="":
-##                                    if str(lines[5]).find("DEAUTHENTICATION")==-1 and str(lines[5]).find("DISASSOCIATE")==-1 and str(lines[5]).find("ACKNOWLEDGEMENT")==-1:
-##                                        BSSIDList.append (lines[x])
-##                        x += 1
-##        open(tmpfile,"w").write("")
-##    GiveClientResult(client)
-##    x=0
-##if len(sys.argv) !=5:
-##    print title
-##    print fcolor.SWhite + "Not for External use\n"
-##    print "Usage\t: ./" + os.path.basename(__file__) + '<conf.iface> <stn_mac> <loopcount> <sleeptime>'
-##    print "Example\t: ./" + os.path.basename(__file__) + 'mon0 00:11:22:33:44:55 99999 2\n'
-##    sys.exit(1)
-##else:
-##    conf.iface = sys.argv[1] 
-##    client = str(sys.argv[2]).upper()
-##    count = sys.argv[3]
-##    sleeptime = int(sys.argv[4])
-##    bssid=""
-##ProcTitle="WIPS - Monitoring MAC " + str(client)
-##conf.verb = 0
-##tmpdir="/.SYWorks/WAIDPS/tmp/"
-##tmpfile=tmpdir + "StnDeauth_" + str(client).replace(":","")
-##TerminatingProc(ProcTitle)
-##print title
-##BSSIDList=[]
-##
-##def CheckMAC(MACAddr):
-##    MACAddr=str(MACAddr).upper().lstrip().rstrip()
-##    rMAC=MACAddr
-##    if len(MACAddr)==17:
-##        if MACAddr[:6]=="FF:FF:":
-##            rMAC=""
-##        if MACAddr[:6]=="33:33:":
-##            rMAC=""
-##        if MACAddr[:9]=="01:80:C2:":
-##            rMAC=""
-##        if MACAddr[:9]=="01:00:5E:":
-##            rMAC=""
-##        if str(BSSIDList).find(MACAddr)!=-1:
-##            rMAC=""
-##    return rMAC
-##
-##def printl (DisplayText,ContinueBack,PrevIconCount):
-##    icolor=fcolor.BGreen
-##    bcolor=fcolor.SWhite
-##    if ContinueBack=="0":
-##        curses.setupterm()
-##        TWidth=curses.tigetnum('cols')
-##        TWidth=TWidth-1
-##        sys.stdout.write("\r")
-##        sys.stdout.flush()
-##        sys.stdout.write (" " * TWidth + "\r")
-##        sys.stdout.flush()
-##        sys.stdout.write(DisplayText)
-##        sys.stdout.flush()
-##    return str(PrevIconCount);
-##if os.path.isfile(tmpfile)==True:
-##    os.remove(tmpfile)
-##MonitoringPacket()
-##cttime=0
-##print ""
-##for n in range(int(count)):
-##    client=str(client).upper().lstrip().rstrip()
-##    bssid=str(bssid).upper().lstrip().rstrip()
-##    __builtin__.Multicast="";__builtin__.DEAUTH=0;__builtin__.DISASSOC=0;__builtin__.ACK=0;__builtin__.AUTH=0;__builtin__.AUTH_BSSID=[]
-##    ReadCaptured()
-##    if len(BSSIDList)==0:
-##        timenow=fcolor.SGreen + str(time.strftime(timefmt))
-##        y=0
-##        while y<30:
-##            printl (timenow  + " - Monitoring... wait for " + str(30-int(y)) +" seconds..","0","")
-##            time.sleep(1)
-##            cttime=int(cttime) + 1
-##            CheckProcess()
-##            statinfo = os.stat(tmpfile)
-##            if statinfo.st_size!=0:
-##                y=30
-##                printl ("","0","")
-##                ReadCaptured()
-##            y += 1
-##    if int(__builtin__.AUTH)>0:
-##        y=0;AuthBSSID=""
-##        while y<len(__builtin__.AUTH_BSSID):
-##            AuthBSSID=AuthBSSID + __builtin__.AUTH_BSSID[y] + " / "
-##            y += 1
-##        AuthBSSID=str(AuthBSSID[:-3]).replace("/",fcolor.SWhite + "/" + fcolor.BRed)
-##        print fcolor.SGreen + str(time.strftime(timefmt)) + " - " + fcolor.BBlue + "Authenticating/Associating Found- BSSID [ " + fcolor.BYellow + str(AuthBSSID) + fcolor.BBlue + " ] "
-##        __builtin__.AUTH_BSSID=[]
-##    x=0
-##    while x<len(BSSIDList):
-##        bssid=BSSIDList[x]
-##        SUCCESSRESULT1="Deauth/Disassoc : " + str(__builtin__.DEAUTH) + " / " + str(__builtin__.DISASSOC)
-##        SUCCESSRESULT=SUCCESSRESULT1.ljust(36) + "Ack : " + fcolor.SCyan + str(__builtin__.ACK).ljust(28)
-##        SUCCESSRESULT=str(SUCCESSRESULT).replace(" / ", fcolor.SWhite + " / " + fcolor.SRed).replace("Ack",fcolor.SWhite + "Ack").replace(":",":" + fcolor.SRed)
-##        print fcolor.SGreen + str(time.strftime(timefmt)) + " - Disassociating/Deauthenticating Station [ " + fcolor.BRed + str(client) + fcolor.SGreen + " ] from BSSID [ " + fcolor.BYellow + bssid + fcolor.SGreen + "  ]"
-##        print "\t\t      " + fcolor.SWhite + str(SUCCESSRESULT) + "" + fcolor.SWhite + str(__builtin__.Multicast) + ""
-##        packet = RadioTap()/Dot11(type=0,subtype=12,addr1=client,addr2=bssid,addr3=bssid)/Dot11Deauth(reason=7)
-##        packet2 = RadioTap()/Dot11(addr1=bssid,addr2=client,addr3=client)/Dot11Deauth(reason=3)
-##        packet3 = RadioTap()/Dot11(addr1=client,addr2=bssid,addr3=bssid)/Dot11Deauth(reason=3)
-##        packet4 = RadioTap()/Dot11(type=0,subtype=12,addr1=client,addr2=bssid,addr3=bssid)/Dot11Disas(reason=7)
-##        packet5 = RadioTap()/Dot11(addr1=bssid,addr2=client,addr3=client)/Dot11Disas(reason=7)
-##        packet6 = RadioTap()/Dot11(addr1=client,addr2=bssid,addr3=bssid)/Dot11Disas(reason=3)
-##        y=0
-##        TerminatingProc('Deauth with Aireplay-NG')
-##        cmdLine="xterm -geometry 100x5-0-0 -iconic -bg black -fg white -fn 5x8 -title 'Deauth with Aireplay-NG' -e 'aireplay-ng -0 10 " + str(conf.iface) + " -a " + str(bssid) + " -c " + str(client) + "'"
-##        ps=subprocess.Popen(cmdLine , shell=True, stdout=subprocess.PIPE, preexec_fn=os.setsid)	
-##        while y<30:
-##            completed=Percent(float(y)/30,2)
-##            printl ("\t\t      " + fcolor.SRed + "Sending Deauth/Disassoc - " + fcolor.SRed + str(completed) + fcolor.SRed + "" ,"0","")
-##            sendp(packet,verbose=0)
-##            sendp(packet2,verbose=0)
-##            sendp(packet3,verbose=0)
-##            sendp(packet4,verbose=0)
-##            sendp(packet5,verbose=0)
-##            sendp(packet6,verbose=0)
-##            time.sleep(0.1)
-##            y=y+1
-##        printl ("" ,"0","")
-##        print ""
-##        cttime=int(cttime) + int(sleeptime)
-##        time.sleep(sleeptime)
-##        __builtin__.Multicast="";__builtin__.DEAUTH=0;__builtin__.DISASSOC=0;__builtin__.ACK=0;__builtin__.AUTH=0;__builtin__.AUTH_BSSID=[]
-##        x += 1
-##    if int(cttime)>=20:
-##        MonitoringPacket()
-##exit(0)
-##--EndFile--##
-##--StopRead--##
 
 def DropFiles():
     with open(__builtin__.ScriptFullPath,"r") as f:
@@ -8447,7 +8216,7 @@ def ShowBanner():
 ##  ##  ## ##     ##  ##  ##     ## ########   ######  
 ##  ##  ## #########  ##  ##     ## ##              ## 
 ##  ##  ## ##     ##  ##  ##     ## ##        ##    ## 
- ###  ###  ##     ## #### ########  ##         ######  """+ str(Ver)
+###  ###  ##     ## #### ########  ##         ######  """+ str(Ver)
         return
                                                                                   
 
@@ -10393,7 +10162,7 @@ def DisplayPanel():
     os.system('clear')
     ShowBanner()
     ShowSYWorks()
-    print "\n\n" + fcolor.BGreen + apptitle + " " +  fcolor.SGreen + appDesc + fcolor.SGreen + ", By SYChua"
+    print "\n\n" + fcolor.BGreen + apptitle + " " +  fcolor.SGreen + appDesc + fcolor.SGreen + ", By C500"
     LineBreak()
     return
 
@@ -13645,9 +13414,12 @@ def ShowIDSDetection(CMD):
         MSG_ATTACK=MSG_ATTACK + "" + DetailInfo + MACInfo+ "\n" + Breaks + "\n"
         __builtin__.MSG_IDSDetectionOverAll=__builtin__.MSG_IDSDetectionOverAll+RemoveDoubleLF(str(MSG_ATTACK))
     MSG_ATTACK=""
+
+    ### Use of AI to detect attack
+
     if int(WarningCount)>0 and __builtin__.SHOW_IDS=="Yes":
         BeepSound()
-        CenterText(fcolor.BGIRed + fcolor.BWhite,"< < <<  WARNING !!! - POSSIBLE ATTACKS DETECTED  >> > >      ")
+        CenterText(fcolor.BGIRed + fcolor.BWhite,"< < <<  WARNING !!! - POSSIBLE ATTACKS DETECTED BY RULE AND AI MODEL  >> > >      ")
         print ""
         __builtin__.MSG_IDSDetectionOverAll=__builtin__.MSG_IDSDetectionOverAll + "" + fcolor.BWhite + "Total Warning : " + fcolor.BRed + str(WarningCount) + "\n" + fcolor.SCyan + "Reported : " + str(Now()) + "\n"
         print str(__builtin__.MSG_IDSDetectionOverAll)
@@ -15097,7 +14869,6 @@ def IDSProcess(CMD):
             printl ("","0","")
             return
         if CMD=="2":
-            
             ShowAnalysedListing("SHOW LIST3_QUIET")
             LineBreak()
             ShowIDSDetection("")
@@ -15293,8 +15064,8 @@ def Main():
             __builtin__.TIMEOUT=5
             FIRST=""
         elif FIRST=="":
-             __builtin__.TIMEOUT=TIMEOUT_BK
-             FIRST="2"
+            __builtin__.TIMEOUT=TIMEOUT_BK
+            FIRST="2"
         else:
             TIMEOUT_BK=__builtin__.TIMEOUT
         captured_pcap=tmpdir + "captured"
