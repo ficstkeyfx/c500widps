@@ -1,3 +1,7 @@
+import __builtin__
+from ../packetcapture/packetcapture import fcolor
+import joblib
+
 def ShowIDSDetection(CMD):
     __builtin__.MSG_IDSDetection =""
     __builtin__.MSG_IDSDetectionOverAll =""
@@ -549,6 +553,22 @@ def ShowIDSDetection(CMD):
     MSG_ATTACK=""
 
     ### Use of AI to detect attack
+    class_map = {
+        0: "normal",
+        1: "anomal"
+    }
+
+    attack_map = {
+        0: "amok",
+        1: "arp",
+        2: "authentication_request",
+        3: "beacon",
+        4: "cafe_latte",
+        5: "deauthentication",
+        6: "evil_twin",
+        7: "fragmentation",
+        8: "probe_response"
+    }
 
     if int(WarningCount)>0 and __builtin__.SHOW_IDS=="Yes":
         BeepSound()
