@@ -8143,80 +8143,34 @@ def ShowBanner():
     Ver=fcolor.BWhite + "  Version " + appver + " (Updated - " + appupdated + ")"
     wordart = random.randrange(1,10+1)
     if wordart == 1:
-        print fcolor.BGreen + """ __          __     _____ _____  _____   _____ 
- \ \        / /\   |_   _|  __ \|  __ \ / ____|
-  \ \  /\  / /  \    | | | |  | | |__) | (___  
-   \ \/  \/ / /\ \   | | | |  | |  ___/ \___ \ 
-    \  /\  / ____ \ _| |_| |__| | |     ____) |
-     \/  \/_/    \_\_____|_____/|_|    |_____/ """ + str(Ver)
+        print fcolor.BGreen + """C500WAIDPS""" + str(Ver)
         return
     if wordart == 2:
-        print fcolor.BGreen + " _    _  ___  _________________  _____ "
-        print fcolor.BGreen + "| |  | |/ _ \\|_   _|  _  \\ ___ \\/  ___|"
-        print fcolor.BGreen + "| |  | / /_\\ \\ | | | | | | |_/ /\\ `--. "
-        print fcolor.BGreen + "| |/\\| |  _  | | | | | | |  __/  `--. \\"
-        print fcolor.BGreen + "\\  /\\  / | | |_| |_| |/ /| |    /\\__/ /"
-        print fcolor.BGreen + " \\/  \\/\\_| |_/\\___/|___/ \\_|    \\____/ "+ str(Ver)
+        print fcolor.BGreen + "C500WAIDPS"+ str(Ver)
         return
     if wordart == 3:
-        print fcolor.BGreen + " __      __  _____  .___________ __________  _________"
-        print fcolor.BGreen + "/  \\    /  \\/  _  \\ |   \\______ \\\\______   \\/   _____/"
-        print fcolor.BGreen + "\\   \\/\\/   /  /_\\  \\|   ||    |  \\|     ___/\\_____  \\ "
-        print fcolor.BGreen + " \\        /    |    \\   ||    `   \\    |    /        \\"
-        print fcolor.BGreen + "  \\__/\\  /\\____|__  /___/_______  /____|   /_______  /"
-        print fcolor.BGreen + "       \\/         \\/            \\/                 \\/ "+ str(Ver)
+        print fcolor.BGreen + "C500WAIDPS"+ str(Ver)
         return
     if wordart == 4:
-        print fcolor.BGreen + """ ____      ____  _       _____  ______   _______    ______   
-|_  _|    |_  _|/ \     |_   _||_   _ `.|_   __ \ .' ____ \  
-  \ \  /\  / / / _ \      | |    | | `. \ | |__) || (___ \_| 
-   \ \/  \/ / / ___ \     | |    | |  | | |  ___/  _.____`.  
-    \  /\  /_/ /   \ \_  _| |_  _| |_.' /_| |_    | \____) | 
-     \/  \/|____| |____||_____||______.'|_____|    \______.' """+ str(Ver)
+        print fcolor.BGreen + """C500WAIDPS"""+ str(Ver)
         return
     if wordart == 5:
-        print fcolor.BGreen + """ _       _  _____  _  ___    ___    ___   
-( )  _  ( )(  _  )(_)(  _`\ (  _`\ (  _`\ 
-| | ( ) | || (_) || || | ) || |_) )| (_(_)
-| | | | | ||  _  || || | | )| ,__/'`\__ \ 
-| (_/ \_) || | | || || |_) || |    ( )_) |
-`\___x___/'(_) (_)(_)(____/'(_)    `\____)"""+ str(Ver)
+        print fcolor.BGreen + """C500WAIDPS"""+ str(Ver)
         return
     if wordart == 6:
-        print fcolor.BGreen + """ _       _____    ________  ____  _____
-| |     / /   |  /  _/ __ \/ __ \/ ___/
-| | /| / / /| |  / // / / / /_/ /\__ \ 
-| |/ |/ / ___ |_/ // /_/ / ____/___/ / 
-|__/|__/_/  |_/___/_____/_/    /____/  """+ str(Ver)
+        print fcolor.BGreen + """C500WAIDPS"""+ str(Ver)
         return
     if wordart == 7:
-        print fcolor.BGreen + """__        ___    ___ ____  ____  ____  
-\ \      / / \  |_ _|  _ \|  _ \/ ___| 
- \ \ /\ / / _ \  | || | | | |_) \___ \ 
-  \ V  V / ___ \ | || |_| |  __/ ___) |
-   \_/\_/_/   \_|___|____/|_|   |____/  """+ str(Ver)
+        print fcolor.BGreen + """C500WAIDPS"""+ str(Ver)
         return
     if wordart == 8:
-        print fcolor.BGreen + "__      ___   ___ ___  ___  ___ "
-        print fcolor.BGreen + "\\ \\    / /_\\ |_ _|   \\| _ \\/ __|"
-        print fcolor.BGreen + " \\ \\/\\/ / _ \\ | || |) |  _/\\__ \\"
-        print fcolor.BGreen + "  \\_/\\_/_/ \\_\\___|___/|_|  |___/"+ str(Ver)
+        print fcolor.BGreen + "C500WAIDPS"+ str(Ver)
         return
     if wordart == 9:
-        print fcolor.BGreen + """ __        ___    ___ ____  ____  ____  
- \ \      / / \  |_ _|  _ \|  _ \/ ___| 
-  \ \ /\ / / _ \  | || | | | |_) \___ \ 
-   \ V  V / ___ \ | || |_| |  __/ ___) |
-    \_/\_/_/   \_\___|____/|_|   |____/ """+ str(Ver)
+        print fcolor.BGreen + """C500WAIDPS"""+ str(Ver)
         return
     if wordart == 10:
-        print fcolor.BGreen + """##      ##    ###    #### ########  ########   ######  
-##  ##  ##   ## ##    ##  ##     ## ##     ## ##    ## 
-##  ##  ##  ##   ##   ##  ##     ## ##     ## ##       
-##  ##  ## ##     ##  ##  ##     ## ########   ######  
-##  ##  ## #########  ##  ##     ## ##              ## 
-##  ##  ## ##     ##  ##  ##     ## ##        ##    ## 
-###  ###  ##     ## #### ########  ##         ######  """+ str(Ver)
+        print fcolor.BGreen + """C500WAIDPS"""+ str(Ver)
         return
                                                                                   
 
