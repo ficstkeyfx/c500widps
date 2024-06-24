@@ -49,7 +49,7 @@ from subprocess import Popen, call, PIPE
 from sys import stdout, stdin 
 from math import floor
 
-from color import fcolor
+from resources.color import fcolor
 appver="1.0, R.6"
 apptitle="WAIDPS"
 appDesc="- C500 Wireless Auditing, Intrusion Detection & Prevention System"
