@@ -1,6 +1,8 @@
 import __builtin__
 from ../packetcapture/packetcapture import fcolor
 import joblib
+from pcapanalysis import processing_packet_conversion
+import numpy as np
 
 def ShowIDSDetection(CMD):
     __builtin__.MSG_IDSDetection =""
@@ -24,6 +26,36 @@ def ShowIDSDetection(CMD):
     AuthFloodMAC=""
     DetailInfo=fcolor.BBlue + "     [Details]\n"
     Breaks=DrawLine("-",fcolor.CReset + fcolor.Black,"","1")
+    package = "/.SYWorks/WAIDPS//waidps/tmp/tcpdump.cap"
+    class_pkg = ""
+    attack_pkg = ""
+    class_map = {
+        0: "normal",
+        1: "anomal"
+    }
+
+    attack_map = {
+        0: "amok",
+        1: "arp",
+        2: "authentication_request",
+        3: "beacon",
+        4: "cafe_latte",
+        5: "deauthentication",
+        6: "evil_twin",
+        7: "fragmentation",
+        8: "probe_response"
+    }
+    data = processing_packet_conversion(package)
+    model=joblib.load('./rf_anomaly_detection/rf_anomaly_detection.pkl')
+    model_classification = joblib.load('./rf_anomaly_detection/rf_anomaly_classification.pkl')
+    y_prob = model.predict(data)
+    y_pred = np.argmax(y_prob, axis = 1)
+    if(y_pred != 0):
+        y_classification_prob = model_classification.predict(data)
+        y_classification_pred = np.argmax(y_classification_prob, axis = 1)
+        attack_pkg = attack_map[y_classification_pred]
+    class_pkg = class_map[y_pred]
+    
     if len(__builtin__.OfInterest_List)>0:
         x=0
         tmpInterestList=[]
@@ -159,7 +191,7 @@ def ShowIDSDetection(CMD):
                MSG_ATTACK=MSG_ATTACK + DisplayAttackMsg(WarningCount,ATTACK_TYPE, sData ,PACKET_SENT,NotesInfo1,NotesInfo2,NotesInfo3)
                MACInfo=DisplayMACSInformation(FrMAC,ToMAC,ToBSSID)
                MSG_ATTACK=MSG_ATTACK + "" + DetailInfo + MACInfo+ "\n" + Breaks + "\n"
-            if int(GET_DATAARP)>int(__builtin__.THRESHOLD_DATAARP) and PrivacyInfo=="WEP":	# ARP 
+            if (int(GET_DATAARP)>int(__builtin__.THRESHOLD_DATAARP) and PrivacyInfo=="WEP") or (class_pkf == "anomal" and attack_pkg == "arp"):	# ARP 
                WarningCount=WarningCount+1;NotesInfo1="";NotesInfo2="";NotesInfo3=""
                PACKET_SENT=GET_DATAARP
                NotesInfo1="The data pattern match those used in Aireplay-NG ARP-Replay Request Attack."
@@ -260,7 +292,7 @@ def ShowIDSDetection(CMD):
                MSG_ATTACK=MSG_ATTACK + DisplayAttackMsg(WarningCount,ATTACK_TYPE, sData ,PACKET_SENT,NotesInfo1,NotesInfo2,NotesInfo3)
                MACInfo=DisplayMACSInformation(ToMAC,ToBSSID,ToBSSID)
                MSG_ATTACK=MSG_ATTACK + "" + DetailInfo + MACInfo+ "\n" + Breaks + "\n"
-            if int(GET_DEAUTH_AC)>int(__builtin__.THRESHOLD_DEAUTH_AC): # and int(GET_DISASSOC)==0:	# DEAUTH - A
+            if int(GET_DEAUTH_AC)>int(__builtin__.THRESHOLD_DEAUTH_AC) or (class_pkg == "anomal" and attack_pkg == "amok"): # and int(GET_DISASSOC)==0:	# DEAUTH - A
                WarningCount=WarningCount+1;NotesInfo1="";NotesInfo2="";NotesInfo3=""
                PACKET_SENT=GET_DEAUTH_AC
                if int(GET_DISASSOC)==0:
@@ -553,23 +585,7 @@ def ShowIDSDetection(CMD):
     MSG_ATTACK=""
 
     ### Use of AI to detect attack
-    class_map = {
-        0: "normal",
-        1: "anomal"
-    }
-
-    attack_map = {
-        0: "amok",
-        1: "arp",
-        2: "authentication_request",
-        3: "beacon",
-        4: "cafe_latte",
-        5: "deauthentication",
-        6: "evil_twin",
-        7: "fragmentation",
-        8: "probe_response"
-    }
-
+    
     if int(WarningCount)>0 and __builtin__.SHOW_IDS=="Yes":
         BeepSound()
         CenterText(fcolor.BGIRed + fcolor.BWhite,"< < <<  WARNING !!! - POSSIBLE ATTACKS DETECTED BY RULE AND AI MODEL  >> > >      ")
